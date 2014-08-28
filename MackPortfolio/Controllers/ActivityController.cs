@@ -128,11 +128,14 @@ namespace MackPortfolio.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            if (rep != null)
             {
-                rep.Dispose();
+                if (disposing)
+                {
+                    rep.Dispose();
+                }
+                base.Dispose(disposing);
             }
-            base.Dispose(disposing);
         }
     }
 }

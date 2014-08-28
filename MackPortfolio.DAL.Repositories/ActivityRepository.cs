@@ -28,7 +28,8 @@ namespace MackPortfolio.DAL.Repositories
         }
         public List<ActivityViewModel> GetList()
         {
-            return Activities
+            return context.Events.Include(s => s.Location)
+                .AsEnumerable()
                 .Select(s => mapViewModel(s))
                 .OrderByDescending(o => o.EventDate)
                 .ToList();
@@ -36,6 +37,10 @@ namespace MackPortfolio.DAL.Repositories
         public ActivityViewModel GetArticle(Guid? id)
         {
             var article = getArticle(id);
+            if (article == null)
+            {
+                return null;
+            }
             return mapViewModel(article);
         }
         public ActivityViewModel CreateArticle(ActivityViewModel model, HttpPostedFileBase file, HttpServerUtilityBase server)
