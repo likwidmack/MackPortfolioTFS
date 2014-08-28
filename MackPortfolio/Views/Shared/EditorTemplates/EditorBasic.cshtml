@@ -1,0 +1,25 @@
+﻿@model string
+@{
+    Layout = "~/Views/Shared/EditorTemplates/_LayoutEditor.cshtml";
+    var mdata = ViewData.ModelMetadata;
+    var htmlAttr = new ViewDataDictionary();
+
+    htmlAttr["class"] = "html-editor";
+
+    if (!String.IsNullOrEmpty(mdata.Description))
+    {
+        htmlAttr["title"] = mdata.Description;
+    }
+    if (!String.IsNullOrEmpty(mdata.Watermark))
+    {
+        htmlAttr["placeholder"] = mdata.Watermark;
+    }
+}
+
+@(Html.Kendo().EditorFor(m => m)
+    .HtmlAttributes(htmlAttr)
+    .Tools(tools => tools
+        .Clear()
+        .Bold().Italic().Underline()
+        .CreateLink().Unlink())
+)

@@ -1,0 +1,42 @@
+﻿@model string
+@{
+    Layout = "~/Views/Shared/EditorTemplates/_LayoutEditor.cshtml";
+    var mdata = ViewData.ModelMetadata;
+    var htmlAttr = new ViewDataDictionary();
+    var htmlValue = HttpUtility.HtmlDecode(ViewData.TemplateInfo.FormattedModelValue.ToString());
+
+    htmlAttr["class"] = "html-editor";
+    htmlAttr["data-hiddenId"] = ViewData.TemplateInfo.GetFullHtmlFieldId(String.Empty);
+
+    if (!String.IsNullOrEmpty(mdata.Description))
+    {
+        htmlAttr["title"] = mdata.Description;
+    }
+    if (!String.IsNullOrEmpty(mdata.Watermark))
+    {
+        htmlAttr["placeholder"] = mdata.Watermark;
+    }
+}
+
+@(Html.Kendo().Editor()
+    .Name(ViewData.TemplateInfo.GetFullHtmlFieldId(String.Empty) + "_Editor")
+    .HtmlAttributes(htmlAttr)
+    .Tag("div")
+    .Tools(tools => tools
+        .Clear()
+        .Bold().Italic().Underline()
+        .InsertUnorderedList().InsertOrderedList()
+        .Outdent().Indent()
+        .CreateLink().Unlink()
+        .InsertImage())
+    .Value(htmlValue)
+    .ImageBrowser(imageBrowser => imageBrowser
+        .Image("~/Media/Editor/Images/{0}")
+        .Read("Read", "ImageBrowser")
+        .Create("Create", "ImageBrowser")
+        .Destroy("Destroy", "ImageBrowser")
+        .Upload("Upload", "ImageBrowser")
+        .Thumbnail("Thumbnail", "ImageBrowser"))
+    .Events(e => e.Change("onEditorChange"))
+)
+@(Html.HiddenFor(m=>m))

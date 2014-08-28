@@ -1,0 +1,165 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@section styles{
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+<style type="text/css">
+    @@keyframes animatedBackground {
+	    from { background-position: 0 100%; }
+	    to { background-position: 100% 0; }
+    }
+    #mainapp {
+        background-color:rgb(115,115,115);
+        background-image: url(@Url.Content("~/Content/images/lt-granite.png"));
+        background-repeat: repeat;
+        background-position:center;
+        animation: animatedBackground 150s linear infinite;
+    }
+</style>
+}
+<div class="row" id="HomePage">
+    <div class="small-12 columns">
+        <section class="inner-page">
+            <div class="row">
+                <div class="large-9 medium-7 columns">
+                    <h1>WEB APPLICATION</h1>
+                    <h2>Welcome to Tamara's Simple Sample Project</h2>
+                    <p>
+                        Here I will show quick examples and snippets of tools I use for building great Web sites and Web applications using HTML, CSS and JavaScript
+                        on ASP.NET MVC.
+                    </p>
+                </div>
+                <div id="KeyTechno" class="large-3 medium-5 columns">
+                    <section class="alert-box hide-for-small">
+                        <ul class="no-bullet">
+                            <li>C# .NET 4.5</li>
+                            <li>ASP.NET MVC w/ Razor</li>
+                            <li>Entity Framework</li>
+                            <li>JavaScript</li>
+                            <li>HTML5 / CSS3</li>
+                            <li>Sql Server Compact</li>
+                            <li>Zurb Foundation</li>
+                        </ul>
+                    </section>
+                    <section class="alert-box show-for-small">
+                        <ul class="inline-list">
+                            <li>C# .NET 4.5</li>
+                            <li>ASP.NET MVC w/ Razor</li>
+                            <li>Entity Framework</li>
+                            <li>JavaScript</li>
+                            <li>HTML5 / CSS3</li>
+                            <li>Sql Server Compact</li>
+                            <li>Zurb Foundation</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="large-12 columns">
+                    <section>
+                        <h3>Client Side Detection</h3>
+                        <div class="row">
+                            <div class="large-4 columns">
+                                <h4>System Date Time</h4>
+                                <section id="UserSystem" class="panel radius" data-bind="with:system">
+                                    <div class="text-right"><a data-bind="click:refresh">Update Date Time</a></div>
+                                    <ul class="no-bullet">
+                                        <li><strong>Time Zone Offset (hours)</strong>:&nbsp;<span data-bind="text:timezoneOffsetHours"></span></li>
+                                        <li><strong>UTC Date</strong>:&nbsp;<span data-bind="text:gmt"></span></li>
+                                        <li><strong>Current Date</strong>:&nbsp;<span data-bind="text:date"></span></li>
+                                        <li><strong>Modified Date</strong>:&nbsp;<span data-bind="text:modifiedDate"></span></li>
+                                    </ul>
+                                </section>
+                            </div>
+                            <div class="large-4 columns">
+                                <h4>Browser Agent Detection</h4>
+                                <section id="browserDetect" class="panel radius" data-bind="with:browser">
+                                    <ul class="no-bullet">
+                                        <li><strong>appName</strong>:&nbsp;<span data-bind="text:name"></span> :: <span data-bind="text:nameFormal"></span></li>
+                                        <li><strong>appVersion</strong>:&nbsp;<span data-bind="text:version"></span> :: <span data-bind="text:versionFormal"></span></li>
+                                        <li><strong>platform</strong>:&nbsp;<span data-bind="text:platform"></span> :: <span data-bind="text:platformFormal"></span></li>
+                                        <li><strong>userAgent</strong>:&nbsp;<span data-bind="text:agent"></span></li>
+                                    </ul>
+                                </section>
+                            </div>
+                            <div class="large-4 columns">
+                                <h4>Connection Speed</h4>
+                                <section id="inetConnection" class="panel radius" data-bind="with:connection">
+                                    <div class="text-right"><a data-bind="click:refresh">Test Connection</a></div>
+                                    <ul class="no-bullet">
+                                        <li><span data-bind="text:speedBps"></span> bps</li>
+                                        <li><span data-bind="text:speedKbps"></span> kbps</li>
+                                        <li><span data-bind="text:speedMbps"></span> mbps</li>
+                                        <li><br /><strong data-bind="html:message"></strong></li>
+                                    </ul>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-12 columns">
+                                <h3 class="text-right">Map Size Ratio == Window Screen Ratio</h3>
+                                <section class="panel">
+                                    <div class="row" data-bind="with:location">
+                                        <div class="medium-8 large-9 columns">
+                                            <section>
+                                                <div id="mapWrapper" data-bind="windowResize:{}, updateWidth:boxWidth, style:{width: boxWidth()+'px', height: boxHeight()+'px'}">
+                                                    <div id="map"></div>
+                                                </div>
+                                                <label data-bind="html:msg"></label>
+                                            </section>
+                                        </div>
+                                        <div class="medium-4 large-3 columns">
+                                            <a class="button small round" data-bind="click:getCurrentLocation">Current Location</a>
+                                            <div class="row collapse">
+                                                <div class="small-9 large-10 columns">
+                                                    <input type="text" title="Find Address" placeholder="Your Location, State, Zipcode" data-bind="value:address" />
+                                                </div>
+                                                <div class="small-3 large-2 columns">
+                                                    <button class="button postfix" data-bind="click:getAddressLocation">Go</button>
+                                                </div>
+                                            </div>
+                                            <section>
+                                                <h5>Screen Monitor Information</h5>
+                                                <div class="alert-box info radius" data-bind="with:$parent.monitor">
+                                                    <ul class="no-bullet">
+                                                        <li>Width: <span id="mWidth" data-bind="text:width"></span></li>
+                                                        <li>Height: <span id="mHeight" data-bind="text:height"></span></li>
+                                                        <li>availWidth: <span id="aWidth" data-bind="text:availWidth"></span></li>
+                                                        <li>availHeight: <span id="aHeight" data-bind="text:availHeight"></span></li>
+                                                        <li>colorDepth: <span id="colorD" data-bind="text:colorDepth"></span></li>
+                                                        <li>pixelDepth: <span id="pixelD" data-bind="text:pixelDepth"></span></li>
+                                                        <li>Aspect Ratio: <span id="ratioA" data-bind="text:calculatedRatio"></span> :: <span id="ratioR" data-bind="text:reducedRatio"></span></li>
+                                                    </ul>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="large-12 columns">
+                                <section></section>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        main.inetUrl = '@Url.Action("inetConnTest", "Home")';
+
+        $(function () {
+            main.BrowserDetect.init();
+
+            main.model = new MainModel();
+            ko.applyBindings(main.model);
+            main.model.init();
+            console.log(ko.toJS(main.model));
+        });
+    </script>
+    <script src="@Url.Content("~/Scripts/site/views/home.js")"></script>
+}
